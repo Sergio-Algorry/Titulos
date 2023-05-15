@@ -1,12 +1,17 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
+using Titulos.BData.Data;
 
+//CONTRUCCION DEL BUILDER
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<Context>(op => op.UseSqlServer("name=conn"));
 
+//CONSTRUCCION DE LA APLICACION
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
