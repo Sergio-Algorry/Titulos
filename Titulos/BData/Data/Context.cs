@@ -18,6 +18,7 @@ namespace Titulos.BData.Data
         //}
 
         //public DbSet<Persona> Personas { get; set; }
+        public DbSet<Profesion> Profesiones => Set<Profesion>();
 
         public DbSet<Persona> Personas => Set<Persona>();
 
