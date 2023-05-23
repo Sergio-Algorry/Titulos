@@ -11,7 +11,6 @@ namespace Titulos.BData.Data
     public class Context : DbContext
     {
         //private int myVar;
-
         //public int MyProperty
         //{
         //    get { return myVar; }

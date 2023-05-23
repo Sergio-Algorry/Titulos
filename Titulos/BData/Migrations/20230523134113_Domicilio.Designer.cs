@@ -11,8 +11,8 @@ using Titulos.BData.Data;
 namespace Titulos.BData.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230515150329_Inicio")]
-    partial class Inicio
+    [Migration("20230523134113_Domicilio")]
+    partial class Domicilio
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,10 @@ namespace Titulos.BData.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DNI")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Domicilio")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
