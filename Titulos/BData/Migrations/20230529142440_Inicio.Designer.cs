@@ -11,8 +11,8 @@ using Titulos.BData.Data;
 namespace Titulos.BData.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230523144201_profesion")]
-    partial class profesion
+    [Migration("20230529142440_Inicio")]
+    partial class Inicio
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,37 @@ namespace Titulos.BData.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Titulos.BData.Data.Entity.Especialidad", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CodEspecialidad")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("DescEspecialidad")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<int>("ProfesionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfesionId");
+
+                    b.HasIndex(new[] { "CodEspecialidad" }, "Especialidad_CodEspecialidad_UQ")
+                        .IsUnique();
+
+                    b.ToTable("Especialidades");
+                });
 
             modelBuilder.Entity("Titulos.BData.Data.Entity.Persona", b =>
                 {
@@ -83,6 +114,22 @@ namespace Titulos.BData.Migrations
                         .IsUnique();
 
                     b.ToTable("Profesiones");
+                });
+
+            modelBuilder.Entity("Titulos.BData.Data.Entity.Especialidad", b =>
+                {
+                    b.HasOne("Titulos.BData.Data.Entity.Profesion", "Profesion")
+                        .WithMany("Especialidades")
+                        .HasForeignKey("ProfesionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Profesion");
+                });
+
+            modelBuilder.Entity("Titulos.BData.Data.Entity.Profesion", b =>
+                {
+                    b.Navigation("Especialidades");
                 });
 #pragma warning restore 612, 618
         }
