@@ -25,5 +25,8 @@ namespace Titulos.BData.Data.Entity
         [Required(ErrorMessage = "La Profesión de la Especialidad es Obligatorio")]
         public int ProfesionId { get; set; }
         public Profesion Profesion { get; set; }
+
+        public List<Matricula> Matriculas { get; set; } = new List<Matricula>();
+
     }
 }

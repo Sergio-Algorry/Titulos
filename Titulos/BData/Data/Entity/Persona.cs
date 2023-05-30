@@ -27,5 +27,9 @@ namespace Titulos.BData.Data.Entity
         
         [MaxLength(150, ErrorMessage = "Solo se aceptan hasta 150 caracteres en el DOMICILIO")]
         public string? Domicilio { get; set; }
+
+        public List<Matricula> Matriculas { get; set; } = new List<Matricula>();
+
+
     }
 }

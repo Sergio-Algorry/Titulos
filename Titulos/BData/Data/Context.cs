@@ -24,12 +24,19 @@ namespace Titulos.BData.Data
 
         public DbSet<Especialidad> Especialidades => Set<Especialidad>();
 
+        public DbSet<Matricula> Matriculas => Set<Matricula>();
+
         public Context(DbContextOptions options) : base(options)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Matricula>(o =>
+            {
+                o.Property(b => b.Pago).HasColumnType("Decimal(10,8)");
+            });
+
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()
                 .SelectMany(t => t.GetForeignKeys())
                 .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
@@ -40,7 +47,6 @@ namespace Titulos.BData.Data
             }
 
             base.OnModelCreating(modelBuilder);
-
         }
 
 
