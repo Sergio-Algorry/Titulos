@@ -4,7 +4,7 @@ using Titulos.Shared;
 namespace Titulos.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("WeatherForecast")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
