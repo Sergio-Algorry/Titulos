@@ -15,7 +15,8 @@ namespace Titulos.BData.Data.Entity
         public int Id { get; set; }
 
         [Required(ErrorMessage = "El CODIGO DE LA PROFESION es Obligatorio")]
-        [MaxLength(3, ErrorMessage = "Solo se aceptan hasta 3 caracteres en el CODIGO DE LA PROFESION")]
+        [MaxLength(3, ErrorMessage = "Solo se aceptan hasta {1} caracteres en el {0}")]
+        [Display(Name = "Código")]
         public string CodProfesion { get; set; }
 
         [Required(ErrorMessage = "El CODIGO DE LA PROFESION es Obligatorio")]

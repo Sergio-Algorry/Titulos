@@ -22,6 +22,19 @@ namespace Titulos.Server.Controllers
             return await context.Profesiones.ToListAsync();
         }
 
+        [HttpGet("{id:int}")] // api/profesiones/5
+        [HttpGet("buscar/{id:int}")] // api/profesiones/buscar/5
+        [HttpGet("/buscar/{id:int}")] // buscar/5
+        public async Task<ActionResult<Profesion>> GetById(int id)
+        {
+            var existe = await context.Profesiones.AnyAsync(x => x.Id == id);
+            if (!existe)
+            {
+                return NotFound($"La profesión de id={id} no existe");
+            }
+            return await context.Profesiones.FirstOrDefaultAsync(prof => prof.Id == id);
+        }
+
         [HttpPost]
         public async Task<ActionResult<int>> Post(Profesion profesion)
         {
