@@ -11,15 +11,15 @@ using Titulos.BData.Data;
 namespace Titulos.BData.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230529142440_Inicio")]
-    partial class Inicio
+    [Migration("20230702165025_inicio")]
+    partial class inicio
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "7.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -53,6 +53,38 @@ namespace Titulos.BData.Migrations
                         .IsUnique();
 
                     b.ToTable("Especialidades");
+                });
+
+            modelBuilder.Entity("Titulos.BData.Data.Entity.Matricula", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EspecialidadId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NumMatricula")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<decimal>("Pago")
+                        .HasColumnType("Decimal(10,8)");
+
+                    b.Property<int>("PersonaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonaId");
+
+                    b.HasIndex(new[] { "EspecialidadId", "PersonaId" }, "Matricula_EspecialidadId_PersonaId_UQ")
+                        .IsUnique();
+
+                    b.ToTable("Matriculas");
                 });
 
             modelBuilder.Entity("Titulos.BData.Data.Entity.Persona", b =>
@@ -125,6 +157,35 @@ namespace Titulos.BData.Migrations
                         .IsRequired();
 
                     b.Navigation("Profesion");
+                });
+
+            modelBuilder.Entity("Titulos.BData.Data.Entity.Matricula", b =>
+                {
+                    b.HasOne("Titulos.BData.Data.Entity.Especialidad", "Especialidad")
+                        .WithMany("Matriculas")
+                        .HasForeignKey("EspecialidadId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Titulos.BData.Data.Entity.Persona", "Persona")
+                        .WithMany("Matriculas")
+                        .HasForeignKey("PersonaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Especialidad");
+
+                    b.Navigation("Persona");
+                });
+
+            modelBuilder.Entity("Titulos.BData.Data.Entity.Especialidad", b =>
+                {
+                    b.Navigation("Matriculas");
+                });
+
+            modelBuilder.Entity("Titulos.BData.Data.Entity.Persona", b =>
+                {
+                    b.Navigation("Matriculas");
                 });
 
             modelBuilder.Entity("Titulos.BData.Data.Entity.Profesion", b =>
