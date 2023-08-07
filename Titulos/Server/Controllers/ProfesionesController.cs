@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Titulos.BData.Data;
 using Titulos.BData.Data.Entity;
+using Titulos.Shared.DTO;
 
 namespace Titulos.Server.Controllers
 {
@@ -19,7 +20,8 @@ namespace Titulos.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Profesion>>> Get()
         {
-            return await context.Profesiones.ToListAsync();
+            var pepe = await context.Profesiones.ToListAsync();
+            return pepe;
         }
 
         [HttpGet("{id:int}")]
@@ -49,7 +51,7 @@ namespace Titulos.Server.Controllers
         {
             context.Add(profesion);
             await context.SaveChangesAsync();
-            return profesion.Id;
+            return 0;
         }
 
         [HttpPut("{id:int}")] // api/profesiones/2
