@@ -30,7 +30,7 @@ namespace Titulos.Server.Controllers
             var existe = await context.Profesiones.AnyAsync(x => x.Id == id);
             if (!existe)
             {
-               return NotFound($"La profesión de id={id} no existe");
+               return NotFound($"La profesión {id} no existe");
             }
            return  await context.Profesiones.FirstOrDefaultAsync(prof => prof.Id == id);
         }
@@ -47,11 +47,22 @@ namespace Titulos.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Post(Profesion profesion)
+        public async Task<ActionResult<int>> Post(ProfesionDTO profesion)
         {
-            context.Add(profesion);
+            Profesion pepe = new Profesion();
+
+            pepe.CodProfesion=profesion.CodProfesion;
+            pepe.Titulo=profesion.Titulo;
+
+            //Profesion pepe = new() 
+            //{ 
+            //    CodProfesion = profesion.CodProfesion,
+            //    Titulo = profesion.Titulo
+            //};
+
+            await context.AddAsync(pepe);
             await context.SaveChangesAsync();
-            return 0;
+            return pepe.Id;
         }
 
         [HttpPut("{id:int}")] // api/profesiones/2
