@@ -92,8 +92,17 @@ namespace Titulos.Server.Controllers
             {
                 return NotFound($"La profesión de id={id} no existe");
             }
+            Profesion pepe = new Profesion();
+            pepe.Id = id;
 
-            context.Remove(new Profesion() { Id=id });
+            // Profesion pepe = new()
+            // {
+            //   Id = id
+            // };
+
+            context.Remove(pepe);
+
+            //context.Remove(new Profesion() { Id = id });
             await context.SaveChangesAsync();
 
             return Ok();
