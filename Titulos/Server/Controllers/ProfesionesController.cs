@@ -87,18 +87,23 @@ namespace Titulos.Server.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var existe = await context.Profesiones.AnyAsync(x => x.Id == id);
-            if (!existe)
+            var pepe = await context.Profesiones.FirstOrDefaultAsync(prof => prof.Id == id);
+            if(pepe is null)
             {
-                return NotFound($"La profesión de id={id} no existe");
+                return NotFound($"La profesión solicitada no se pudo borrar");
             }
-            Profesion pepe = new Profesion();
-            pepe.Id = id;
+            //var existe = await context.Profesiones.AnyAsync(x => x.Id == id);
+            //if (!existe)
+            //{
+            //    return NotFound($"La profesión de id={id} no existe");
+            //}
+            //Profesion pepe = new Profesion();
+            //pepe.Id = id;
 
-            // Profesion pepe = new()
-            // {
-            //   Id = id
-            // };
+            //// Profesion pepe = new()
+            //// {
+            ////   Id = id
+            //// };
 
             context.Remove(pepe);
 

@@ -74,7 +74,7 @@ namespace Titulos.Server.Controllers
             }
         }
 
-        [HttpPut("{id:int}")] // api/profesiones/2
+        [HttpPut("{id:int}")] 
         public async Task<ActionResult> Put(Especialidad entidad, int id)
         {
             if (id != entidad.Id)
