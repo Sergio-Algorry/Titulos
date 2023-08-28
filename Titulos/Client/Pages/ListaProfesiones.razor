@@ -1,0 +1,70 @@
+﻿@page "/profesiones"
+@inject IHttpServicio http
+
+<PageTitle>PROFESIONES</PageTitle>
+
+<HeadContent>
+    <meta name="description" content="Listado de profesiones" />
+</HeadContent>
+
+<h3>Lista de Profesiones</h3>
+
+<table>
+    <tr>
+        <th>Código</th>
+        <th>Profesión</th>
+    </tr>
+
+    @if (Error)
+    {
+        <tr>@Mensaje</tr>
+    }
+    else
+    {
+        @if (profesiones == null)
+        {
+            <tr>Cargando....</tr>
+        }
+        else if (profesiones.Count == 0)
+        {
+            <tr>no existen datos</tr>
+        }
+        else
+        {
+            @foreach (var item in profesiones)
+            {
+                <tr>
+                    <td>@item.CodProfesion</td>
+                    <td>@item.Titulo</td>
+                </tr>
+            }
+        }
+    }
+</table>
+
+@code {
+    List<Profesion>? profesiones;
+    bool Error = false;
+    string Mensaje = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await Leer();
+    }
+
+    private async Task Leer()
+    {
+        var respuesta = await http.Get<List<Profesion>>("api/Profesiones");
+        Error = respuesta.Error;
+        if (!respuesta.Error)
+        {
+            profesiones = respuesta.Respuesta;
+        }
+        else
+        {
+            Mensaje = await respuesta.ObtenerError();
+        }
+    }
+
+}

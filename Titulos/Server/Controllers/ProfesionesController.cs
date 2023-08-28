@@ -25,7 +25,7 @@ namespace Titulos.Server.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Profesion>> Get(int id)
+        public async Task<ActionResult<Profesion?>> Get(int id)
         {
             var existe = await context.Profesiones.AnyAsync(x => x.Id == id);
             if (!existe)
