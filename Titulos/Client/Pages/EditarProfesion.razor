@@ -1,0 +1,56 @@
+﻿@page "/profesiones/editar/{profesionId:int}"
+@inject IHttpServicio http
+@inject NavigationManager navigationManager
+<h3>Editar Profesion</h3>
+
+<FormProfesion prof="profesion" onValidSubbmit="Grabar" onCancel="Cancelar" />
+
+@code {
+    private Profesion profesion = new();
+    [Parameter] public int profesionId { get; set; }
+    string Mensaje = "";
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitializedAsync();
+        await Mostrar();
+    }
+
+    private async Task Mostrar()
+    {
+        var respuesta = await http.Get<Profesion>($"api/Profesiones/{profesionId}");
+
+        if (!respuesta.Error)
+        {
+            profesion = respuesta.Respuesta;
+        }
+        else
+        {
+            Mensaje = await respuesta.ObtenerError();
+        }
+        
+    }
+
+    private async void Grabar()
+    {
+        // ProfesionDTO profesionDTO = new()
+        //     {
+        //         CodProfesion = profesion.CodProfesion,
+        //         Titulo = profesion.Titulo
+        //     };
+        // var httpRespueta = await http.Post<ProfesionDTO>("api/profesiones", profesionDTO);
+
+        // if (httpRespueta.Error)
+        // {
+        //     var body = httpRespueta.HttpResponseMessage;
+        // }
+
+        navigationManager.NavigateTo("/profesiones");
+    }
+
+    private async void Cancelar()
+    {
+        navigationManager.NavigateTo("/profesiones");
+    }
+}

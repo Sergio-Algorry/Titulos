@@ -1,15 +1,32 @@
 ﻿@page "/profesiones/crear"
+@inject IHttpServicio http
 @inject NavigationManager navigationManager
 <h3>Nueva Profesion</h3>
 
-<FormProfesion prof="profesion" onValidSubbmit="Grabar" />
+<FormProfesion prof="profesion" onValidSubbmit="Grabar" onCancel="Cancelar" />
 
 @code {
-    private ProfesionDTO profesion = new ProfesionDTO();
+    private Profesion profesion = new Profesion();
 
     private async void Grabar() 
     {
+        ProfesionDTO profesionDTO = new()
+        {
+            CodProfesion = profesion.CodProfesion,
+            Titulo = profesion.Titulo
+        };
+        var httpRespueta = await http.Post<ProfesionDTO>("api/profesiones", profesionDTO);
 
+        if (httpRespueta.Error)
+        {
+            var body = httpRespueta.HttpResponseMessage;
+        }
+
+        navigationManager.NavigateTo("/profesiones");
+    }
+
+    private async void Cancelar()
+    {
         navigationManager.NavigateTo("/profesiones");
     }
 

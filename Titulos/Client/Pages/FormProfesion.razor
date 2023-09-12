@@ -17,8 +17,11 @@
     </div>
     <br />
     <button class="btn btn-primary" type="submit">Aceptar</button>
+    <button class="btn btn-secondary" @onclick="onCancel">Cancelar</button>
 </EditForm>
+
 @code {
-    [Parameter] public ProfesionDTO prof { get; set; } = new ProfesionDTO();
+    [Parameter] public Profesion prof { get; set; } = new Profesion();
     [Parameter] public EventCallback onValidSubbmit { get; set; }
+    [Parameter] public EventCallback onCancel { get; set; }
 }

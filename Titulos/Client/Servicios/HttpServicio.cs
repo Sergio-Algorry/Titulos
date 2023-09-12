@@ -35,7 +35,13 @@ namespace Titulos.Client.Servicios
                                 Encoding.UTF8,
                                 "application/json");
 
+            var respuesta = await http.PostAsync(url, enviarContent);
+            return new HttpRespuesta<object>(null, 
+                                            !respuesta.IsSuccessStatusCode, 
+                                            respuesta);
+
         }
+
         private async Task<T?> DesSerlizar<T>(HttpResponseMessage response)
         {
             var respuestaStr = await response.Content.ReadAsStringAsync();
