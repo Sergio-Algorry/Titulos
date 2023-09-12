@@ -1,0 +1,16 @@
+﻿@page "/profesiones/crear"
+@inject NavigationManager navigationManager
+<h3>Nueva Profesion</h3>
+
+<FormProfesion prof="profesion" onValidSubbmit="Grabar" />
+
+@code {
+    private ProfesionDTO profesion = new ProfesionDTO();
+
+    private async void Grabar() 
+    {
+
+        navigationManager.NavigateTo("/profesiones");
+    }
+
+}

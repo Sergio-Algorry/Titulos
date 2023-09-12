@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 
 namespace Titulos.Client.Servicios
 {
@@ -27,6 +28,14 @@ namespace Titulos.Client.Servicios
 
         }
 
+        public async Task<HttpRespuesta<object>> Post<T>(string url, T enviar)
+        {
+            var enviarJson = JsonSerializer.Serialize(enviar);
+            var enviarContent = new StringContent(enviarJson,
+                                Encoding.UTF8,
+                                "application/json");
+
+        }
         private async Task<T?> DesSerlizar<T>(HttpResponseMessage response)
         {
             var respuestaStr = await response.Content.ReadAsStringAsync();
