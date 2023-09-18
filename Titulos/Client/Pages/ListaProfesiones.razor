@@ -44,6 +44,12 @@
                             Editar
                         </a>
                     </td>
+                    <td>
+                        <button class="btn btn-warning"
+                           @onclick="()=>Eliminar(item)">
+                            Borrar
+                        </button>
+                    </td>
                 </tr>
             }
         }
@@ -54,6 +60,7 @@
     List<Profesion>? profesiones;
     bool Error = false;
     string Mensaje = "";
+    Profesion ProfesionBorrar;
 
     protected override async Task OnInitializedAsync()
     {
@@ -63,6 +70,7 @@
 
     private async Task Leer()
     {
+        profesiones = null;
         var respuesta = await http.Get<List<Profesion>>("api/Profesiones");
         Error = respuesta.Error;
         if (!respuesta.Error)
@@ -73,6 +81,19 @@
         {
             Mensaje = await respuesta.ObtenerError();
         }
+    }
+
+    private async Task Eliminar(Profesion profBorrar )
+    {
+        ProfesionBorrar = profBorrar;
+
+        var respuesta = await http.Delete($"api/profesiones/{ProfesionBorrar.Id}");
+        if (respuesta.Error)
+        {
+            var body = "error no se pudo borrar";
+        }
+        ProfesionBorrar = null;
+        await Leer();
     }
 
 }

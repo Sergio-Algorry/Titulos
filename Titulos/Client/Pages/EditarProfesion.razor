@@ -13,7 +13,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        base.OnInitializedAsync();
+        await base.OnInitializedAsync();
         await Mostrar();
     }
 
@@ -29,27 +29,22 @@
         {
             Mensaje = await respuesta.ObtenerError();
         }
-        
+
     }
 
-    private async void Grabar()
+    private async Task Grabar()
     {
-        // ProfesionDTO profesionDTO = new()
-        //     {
-        //         CodProfesion = profesion.CodProfesion,
-        //         Titulo = profesion.Titulo
-        //     };
-        // var httpRespueta = await http.Post<ProfesionDTO>("api/profesiones", profesionDTO);
-
-        // if (httpRespueta.Error)
-        // {
-        //     var body = httpRespueta.HttpResponseMessage;
-        // }
+        var respuesta = await http.Put<Profesion>($"api/profesiones/{profesionId}",
+                                                  profesion);
+        if(respuesta.Error)
+        {
+            var body = respuesta.HttpResponseMessage;
+        }
 
         navigationManager.NavigateTo("/profesiones");
     }
 
-    private async void Cancelar()
+    private void Cancelar()
     {
         navigationManager.NavigateTo("/profesiones");
     }

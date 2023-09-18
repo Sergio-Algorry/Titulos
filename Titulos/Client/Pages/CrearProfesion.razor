@@ -8,7 +8,7 @@
 @code {
     private Profesion profesion = new Profesion();
 
-    private async void Grabar() 
+    private async Task Grabar() 
     {
         ProfesionDTO profesionDTO = new()
         {
@@ -25,7 +25,7 @@
         navigationManager.NavigateTo("/profesiones");
     }
 
-    private async void Cancelar()
+    private void Cancelar()
     {
         navigationManager.NavigateTo("/profesiones");
     }
