@@ -11,7 +11,7 @@ using Titulos.BData.Data;
 namespace Titulos.BData.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230702165025_inicio")]
+    [Migration("20231003143906_inicio")]
     partial class inicio
     {
         /// <inheritdoc />
@@ -19,7 +19,7 @@ namespace Titulos.BData.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.8")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

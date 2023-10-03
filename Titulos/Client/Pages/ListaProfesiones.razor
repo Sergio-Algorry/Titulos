@@ -55,8 +55,23 @@
         }
     }
 </table>
+<Confirmacion @ref="confirmacion"
+              verCancelar="true"
+              verOk="true"
+              textOk="Aceptar"
+              Titulo="Borrar especialidad"
+              onCancel="Cancelar"
+              onConfirm="Borrar">
+    <div>
+        <h1>Está por borrar la especialidad @ProfesionBorrar.Titulo</h1>
+        <br />
+        ¿Está seguro que desea continuar?
+    </div>
+</Confirmacion>
 
 @code {
+    Confirmacion confirmacion;
+
     List<Profesion>? profesiones;
     bool Error = false;
     string Mensaje = "";
@@ -83,16 +98,26 @@
         }
     }
 
-    private async Task Eliminar(Profesion profBorrar )
+    private void Cancelar()
+    {
+        confirmacion.Ocultar();
+        ProfesionBorrar = null;
+    }
+
+    private async Task Eliminar(Profesion profBorrar)
     {
         ProfesionBorrar = profBorrar;
+        confirmacion.Ver();
+    }
 
+    private async Task Borrar()
+    {
         var respuesta = await http.Delete($"api/profesiones/{ProfesionBorrar.Id}");
         if (respuesta.Error)
         {
             var body = "error no se pudo borrar";
         }
-        ProfesionBorrar = null;
+        Cancelar();
         await Leer();
     }
 
